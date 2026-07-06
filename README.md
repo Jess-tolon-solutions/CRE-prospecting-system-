@@ -32,12 +32,16 @@ and hands the team only the names worth a call, each shipped with the assets to 
 ```
 CRE-prospecting-system/
 ├── README.md                     # you are here
+├── new-prospect.mjs              # scaffold a prospect from a config → examples/<slug>/ + PDFs
 ├── build.mjs                     # render any *.html → print-ready single-source PDF
 ├── docs/
 │   └── system-outline.md         # the framework: sections, signal taxonomy, how to adapt
-├── templates/                    # reusable working source — copy per prospect
+├── templates/                    # tokenized source ({{COMPANY}}, {{MARKET}}, {{FOCUS}}, …)
 │   ├── 01-growth-system.html
 │   └── 02-signal-report.html
+├── prospects/                    # one small config file per prospect
+│   ├── _TEMPLATE.json            # copy this to start a new one
+│   └── capital-asset-management.json
 └── examples/
     └── capital-asset-management/ # first delivered build — Phoenix, industrial pilot
         ├── README.md
@@ -48,8 +52,44 @@ CRE-prospecting-system/
         └── previews/             # PNG previews of each page
 ```
 
-`templates/` holds the latest working files you copy and adapt for a new prospect.
-`examples/` freezes what was actually delivered, as proof and reference.
+`templates/` holds the tokenized source. `prospects/` holds one config per prospect.
+`examples/` holds the generated + delivered builds, as proof and reference.
+
+---
+
+## Create a new prospect (the easy path)
+
+Everything that changes per prospect lives in one small config file. Copy the
+template, edit the fields, run one command:
+
+```bash
+cp prospects/_TEMPLATE.json prospects/acme-realty.json
+# edit prospects/acme-realty.json  (see fields below)
+node new-prospect.mjs prospects/acme-realty.json
+```
+
+That fills the templates, writes `examples/acme-realty/`, and renders both PDFs.
+
+**Config fields:**
+
+| Field | Example | Fills |
+| --- | --- | --- |
+| `slug` | `acme-realty` | the `examples/<slug>/` folder name |
+| `company` | `Acme Realty Partners` | "prepared for …", titles, footers |
+| `companyShort` | `Acme` | "Generated for …", "against …'s criteria" |
+| `market` | `Denver Metro` | report market line, framing |
+| `marketShort` | `Denver` | "This week: Denver …", the pilot line, brief flag |
+| `focus` | `office` | property-type labels, "…-led", "TOP OFFICE SIGNAL", pilot |
+| `footprint` | `Colorado footprint` | the Growth System hero line |
+
+Short/upper/title variants (`CAM` → `PHOENIX`, `office` → `Office` → `OFFICE`) are
+derived automatically. The generator errors out if any token is left unfilled.
+
+> The **framing** is fully automated. The six **signal rows** and the **featured
+> brief** in the Signal Report are illustrative — after generating, replace them
+> with real intel for the market (they're marked `SAMPLE` in the HTML), then
+> re-run `node build.mjs examples/<slug>`. Those specific signals are the actual
+> research each engagement does.
 
 ---
 
@@ -68,15 +108,6 @@ You can also just open a file in Chrome → **Print → Save as PDF**, paper **L
 margins **None**, **Background graphics ON**.
 
 ---
-
-## Adapting for a new prospect, market, or vertical
-
-The current build targets **Capital Asset Management** (Phoenix, industrial-led).
-To spin up a new one, copy `templates/` and swap the market-specific fields listed
-in [`docs/system-outline.md`](docs/system-outline.md#adapting-per-prospect) —
-prospect name, market, footprint, signal weighting, the featured opportunity,
-contacts, and the pilot line. Start narrow (one market, one vertical) and let the
-"same engine covers the rest" line carry the upsell.
 
 ## Roadmap
 

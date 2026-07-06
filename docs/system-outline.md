@@ -89,23 +89,33 @@ firmographics.
 
 ## Adapting per prospect
 
-Copy `templates/` into a new `examples/<prospect>/` folder and swap:
+The templates are **tokenized**, so the framing is config-driven. Copy
+`prospects/_TEMPLATE.json`, edit the fields, and run
+`node new-prospect.mjs prospects/<name>.json` — it fills the tokens, writes
+`examples/<slug>/`, and renders the PDFs. See the README for the field table.
 
-- [ ] **Prospect name** — "Capital Asset Management" / "CAM" and "prepared for …".
-- [ ] **Market** — "Phoenix Metro" in the report meta and the hero/lede.
-- [ ] **Footprint** — the "five-state footprint" phrasing in the Growth System hero.
-- [ ] **Vertical focus** — the report is industrial-led (4 industrial + 2 minority
-      upsell rows). Re-weight rows to the prospect's target vertical; keep one or
-      two off-vertical rows as the visible upsell.
-- [ ] **Signals** — replace the ~6 sample rows with realistic, market-specific
-      signals (keep them illustrative and labeled as sample until live data exists).
+### Tokens (auto-filled from config)
+
+| Token | Source | Notes |
+| --- | --- | --- |
+| `{{COMPANY}}` / `{{COMPANY_SHORT}}` | `company` / `companyShort` | full name and short name |
+| `{{MARKET}}` / `{{MARKET_SHORT}}` / `{{MARKET_UPPER}}` | `market` / `marketShort` | upper is derived |
+| `{{FOCUS}}` / `{{FOCUS_TITLE}}` / `{{FOCUS_UPPER}}` | `focus` | title/upper derived (industrial → Industrial → INDUSTRIAL) |
+| `{{FOOTPRINT}}` | `footprint` | e.g. "five-state footprint" |
+
+### Still done by hand (the actual intel)
+
+Tokens handle names, market, and property-type framing. The substance below is
+market-specific research — edit it in the generated `examples/<slug>/02-signal-report.html`
+(both blocks are marked `SAMPLE` in the HTML), then re-run `node build.mjs examples/<slug>`:
+
+- [ ] **Signal rows** — replace the ~6 sample rows with realistic, market-specific
+      signals. Keep it focus-led (≈4 rows) with 1–2 off-vertical rows as the
+      visible upsell. Keep them labeled illustrative until live data exists.
 - [ ] **Featured opportunity** — the page-2 brief must be the top signal in the
       focus vertical, with its one-pager / email / call-script previews.
 - [ ] **Contacts** — the `[owner resolving]` stubs; fill once the Owner Resolver
       has located the decision-maker.
-- [ ] **Pilot line** — "a four-week Phoenix industrial pilot" → the new market.
-
-Then run `node build.mjs examples/<prospect>` to produce the PDFs.
 
 ### Layout guardrails
 
