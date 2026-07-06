@@ -32,8 +32,9 @@ and hands the team only the names worth a call, each shipped with the assets to 
 ```
 CRE-prospecting-system/
 ├── README.md                     # you are here
-├── new-prospect.mjs              # scaffold a prospect from a config → examples/<slug>/ + PDFs
+├── new-prospect.mjs              # scaffold a prospect from a config → HTML + PDFs + previews
 ├── build.mjs                     # render any *.html → print-ready single-source PDF
+├── preview.mjs                   # render a PNG of every page → previews/ (2x, clipped to sheet)
 ├── docs/
 │   └── system-outline.md         # the framework: sections, signal taxonomy, how to adapt
 ├── templates/                    # tokenized source ({{COMPANY}}, {{MARKET}}, {{FOCUS}}, …)
@@ -68,7 +69,8 @@ cp prospects/_TEMPLATE.json prospects/acme-realty.json
 node new-prospect.mjs prospects/acme-realty.json
 ```
 
-That fills the templates, writes `examples/acme-realty/`, and renders both PDFs.
+That fills the templates, writes `examples/acme-realty/`, and renders both PDFs
+**and** PNG previews of every page into `examples/acme-realty/previews/`.
 
 **Config fields:**
 
@@ -99,8 +101,9 @@ The HTML is self-contained (Google Fonts via CDN) and designed to print to a cle
 US Letter PDF with true zero margins, so the full-bleed black bands reach the edge.
 
 ```bash
-node build.mjs examples/capital-asset-management   # render both docs in a folder
-node build.mjs templates/01-growth-system.html     # render a single file
+node build.mjs examples/capital-asset-management   # PDFs for both docs in a folder
+node build.mjs templates/01-growth-system.html     # PDF for a single file
+node preview.mjs examples/capital-asset-management  # PNG preview of every page → previews/
 ```
 
 Requires Google Chrome (set `CHROME_BIN` if it's not at the default macOS path).

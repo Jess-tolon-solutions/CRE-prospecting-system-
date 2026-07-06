@@ -59,7 +59,10 @@ for (const f of readdirSync(tplDir).filter((f) => f.endsWith('.html'))) {
 console.log('\nrendering PDFs…');
 const r = spawnSync('node', [join(ROOT, 'build.mjs'), outDir], { stdio: 'inherit' });
 
-console.log(`\nDone → examples/${cfg.slug}/`);
+console.log('\nrendering previews…');
+spawnSync('node', [join(ROOT, 'preview.mjs'), outDir], { stdio: 'inherit' });
+
+console.log(`\nDone → examples/${cfg.slug}/  (HTML + PDFs + previews/)`);
 console.log('Next: replace the SAMPLE signal rows and the featured brief in');
 console.log(`      02-signal-report.html with real ${cfg.marketShort} ${cfg.focus} intel,`);
 console.log('      then re-run:  node build.mjs examples/' + cfg.slug);
