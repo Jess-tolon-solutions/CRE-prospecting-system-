@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Monday Signal Report — Sample · Capital Asset Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F3F1F0; --cream-mid:#F0ECE6; --cream-warm:#ECE3D5;
+    --ink:#000000; --muted:#8A857E; --faint:#B5B5B5;
+    --line:rgba(0,0,0,.14); --line-soft:rgba(0,0,0,.08);
+    --paper:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{
+    background:linear-gradient(160deg,#F3F1F0 0%,#F0ECE6 52%,#ECE3D5 100%);
+    color:var(--ink);font-family:'Lato',system-ui,sans-serif;
+    line-height:1.55;letter-spacing:0;padding:40px 20px;
+  }
+  .page{
+    width:8.5in;min-height:10.75in;margin:0 auto 26px;position:relative;
+    background:linear-gradient(160deg,#F3F1F0 0%,#F0ECE6 52%,#ECE3D5 100%);
+    border:1px solid var(--line);display:flex;flex-direction:column;
+  }
+  .page + .page{page-break-before:always}
+  h1,h2,h3,.wm{font-family:'Manrope',sans-serif}
+
+  .mast{background:var(--ink);color:var(--cream);
+    display:flex;justify-content:space-between;align-items:center;padding:13px .5in}
+  .mast .wm{font-weight:800;font-size:18px;letter-spacing:-.02em}
+  .mast .gen{font-size:9.5px;color:#B9B2A6;letter-spacing:.1em;text-align:right}
+
+  .body{padding:24px .5in 26px;flex:1;display:flex;flex-direction:column}
+  .eyebrow{font-size:10.5px;letter-spacing:.14em;color:var(--muted);font-weight:700;margin-bottom:9px}
+  .titlerow{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+  h1{font-weight:800;font-size:38px;line-height:1.02;letter-spacing:-.02em}
+  .subtitle{font-family:'Lato';font-style:italic;font-weight:400;font-size:16px;color:var(--muted);margin-top:3px}
+  .thesis{flex:none;text-align:right;padding-bottom:3px}
+  .thesis b{font-family:'Manrope';font-weight:800;font-size:16px;letter-spacing:-.01em;display:block}
+  .thesis span{font-size:9.5px;color:var(--muted);letter-spacing:.04em}
+
+  .meta{display:flex;flex-wrap:wrap;margin-top:16px;border-top:1px solid var(--ink);
+    border-bottom:1px solid var(--line);padding:10px 0}
+  .meta span{font-size:11px;color:var(--muted);padding-right:16px;margin-right:16px;border-right:1px solid var(--line)}
+  .meta span:last-child{border:none;margin-right:0}
+  .meta b{color:var(--ink);font-weight:800;font-family:'Manrope';letter-spacing:-.01em}
+
+  table{width:100%;border-collapse:collapse;margin-top:4px}
+  thead th{text-align:left;font-family:'Manrope';font-size:9px;letter-spacing:.11em;
+    color:var(--muted);font-weight:700;padding:12px 10px 9px 0;border-bottom:1.5px solid var(--ink)}
+  tbody td{padding:13px 10px 13px 0;border-bottom:1px solid var(--line);vertical-align:top;font-size:11px;line-height:1.34}
+  tbody tr:last-child td{border-bottom:none}
+  .prop{width:21%;font-family:'Manrope';font-weight:700;letter-spacing:-.01em;font-size:11.5px}
+  .prop small{display:block;font-family:'Lato';font-weight:400;color:var(--muted);font-size:9.5px;margin-top:2px}
+  .prop .contact{display:block;font-family:'Lato';font-weight:400;color:var(--muted);font-size:9px;margin-top:6px;letter-spacing:.02em}
+  .sig{width:22%;color:var(--ink)}
+  .why{width:22%;color:var(--muted)}
+  .score{width:7%;white-space:nowrap}
+  .move{width:28%;color:var(--ink)}
+  .move .mt{display:block}
+  .move .mt b{font-family:'Manrope';font-weight:700;font-size:10.5px}
+  .assets{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+  .achip{font-family:'Lato';font-size:8.5px;font-weight:700;letter-spacing:.02em;
+    color:var(--ink);border:1px solid var(--line);padding:2px 6px;white-space:nowrap}
+
+  .tag{display:inline-block;font-family:'Manrope';font-size:9.5px;font-weight:800;
+    letter-spacing:.05em;padding:3px 8px;border:1px solid var(--ink)}
+  .tag.high{background:var(--ink);color:var(--cream)}
+  .tag.med{background:transparent;color:var(--ink)}
+
+  .caption{margin-top:11px;font-size:10px;color:var(--muted);font-style:italic}
+  .contd{margin-top:auto;padding-top:16px;display:flex;justify-content:space-between;
+    align-items:baseline;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}
+  .contd b{font-family:'Manrope';font-weight:700;color:var(--ink)}
+  .contd .pg{letter-spacing:.1em}
+
+  /* PAGE 2 — action layer */
+  .lead{font-size:12px;color:#33302b;line-height:1.5;margin:4px 0 14px;max-width:6.9in}
+  .lead b{font-weight:700}
+  .brief{border:1.5px solid var(--ink);background:var(--paper)}
+  .brief-head{background:var(--ink);color:var(--cream);font-family:'Manrope';font-weight:700;
+    font-size:12px;letter-spacing:.06em;padding:9px 16px}
+  .brief-in{padding:16px 16px 18px}
+  .brief .flag{font-size:9px;letter-spacing:.12em;color:var(--muted);font-weight:700;font-family:'Manrope';margin-bottom:5px}
+  .brief h3{font-weight:800;font-size:18px;letter-spacing:-.01em}
+  .brief .bwhy{font-size:11.5px;color:#33302b;line-height:1.5;margin-top:6px;max-width:6.9in}
+  .brief .move-line{font-size:11.5px;margin-top:11px;padding-top:11px;border-top:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:8px 26px}
+  .brief .move-line b{font-family:'Manrope';font-weight:700}
+  .assets-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;margin-top:14px}
+  .asset{border:1px solid var(--line);padding:11px 12px;display:flex;flex-direction:column}
+  .asset-h{font-family:'Lato';font-weight:700;font-size:9.5px;letter-spacing:.06em;color:var(--ink);
+    border-bottom:1px solid var(--line);padding-bottom:6px;margin-bottom:8px}
+  .thumb{border:1px dashed var(--faint);background:var(--cream-mid);height:82px;
+    display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--muted);font-weight:700;margin-bottom:8px}
+  .asset-cap{font-size:10px;color:var(--muted);line-height:1.45;font-style:italic}
+  .asset-body{font-size:10px;color:#4a463f;line-height:1.55}
+  .asset-body b{font-weight:700;color:var(--ink)}
+
+  .handoff{margin-top:18px}
+  .handoff .hlead{font-size:11px;color:#33302b;margin-bottom:9px}
+  .handoff .hlead b{font-weight:700}
+  .hsteps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .hstep{border:1px solid var(--line);background:var(--paper);padding:12px 13px;font-size:10.5px;color:var(--muted);line-height:1.45}
+  .hstep b{font-family:'Manrope';font-weight:700;font-size:11.5px;color:var(--ink);display:block;margin-bottom:4px;letter-spacing:-.01em}
+
+  .foot{margin-top:auto;background:var(--ink);color:var(--cream);padding:20px .5in}
+  .foot .lab{font-family:'Manrope';font-weight:800;font-size:11px;letter-spacing:.05em;color:var(--cream);margin-bottom:8px}
+  .foot p{font-size:11px;color:#C6BFB3;line-height:1.6;max-width:7.1in}
+  .foot p b{color:var(--cream);font-weight:700}
+  .foot .value{margin-top:12px;font-family:'Manrope';font-weight:700;font-size:13px;color:var(--cream);letter-spacing:-.01em}
+  .foot .note{margin-top:10px;font-size:9.5px;color:#8f887c;font-style:italic}
+  .foot .sign{margin-top:12px;font-family:'Manrope';font-weight:800;font-size:14px;color:var(--cream);letter-spacing:-.02em}
+
+  @page{size:Letter portrait;margin:0}
+  @media print{
+    body{background:#fff;padding:0}
+    .page{border:none;box-shadow:none;margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+  @media(max-width:720px){
+    .page{width:100%;min-height:0}
+    h1{font-size:28px}.titlerow{flex-direction:column;align-items:flex-start}.thesis{text-align:left}
+    .mast,.body,.foot{padding-left:22px;padding-right:22px}
+    table,thead,tbody,tr,td{display:block}thead{display:none}
+    tbody td{border:none;padding:2px 0;width:auto!important}
+    tbody tr{border-bottom:1px solid var(--line);padding:14px 0}
+    .prop{font-size:14px}.score{margin-top:8px}.assets-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===== PAGE 1 — THE LIST ===== -->
+  <div class="page">
+    <div class="mast">
+      <div class="wm">Tolon.</div>
+      <div class="gen">Generated for CAM&nbsp;&middot;&nbsp;Monday 6:00 AM MST</div>
+    </div>
+
+    <div class="body">
+      <div class="eyebrow">Prepared for Capital Asset Management</div>
+      <div class="titlerow">
+        <div>
+          <h1>The Monday Signal Report</h1>
+          <div class="subtitle">the ones worth a call</div>
+        </div>
+        <div class="thesis"><b>No signal, no send.</b><span>the rule the whole system runs on</span></div>
+      </div>
+
+      <div class="meta">
+        <span>Market&nbsp; <b>Phoenix Metro</b></span>
+        <span>Week of&nbsp; <b>June 29, 2026</b></span>
+        <span><b>6</b> signals flagged</span>
+        <span><b>4</b> high&nbsp;/&nbsp;<b>2</b> medium</span>
+        <span>Focus&nbsp; <b>Industrial-led</b></span>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="prop">Target &amp; contact</th>
+            <th class="sig">Signal</th>
+            <th class="why">What it surfaces</th>
+            <th class="score">Score</th>
+            <th class="move">Move &middot; feeds &middot; assets</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="prop">Loop 303 big-box<small>±1.1M SF · industrial</small><span class="contact">Contact · [owner resolving]</span></td>
+            <td class="sig">Developer pulled a distribution permit; new interchange funded</td>
+            <td class="why">A pre-lease target before the shell tops out.</td>
+            <td class="score"><span class="tag high">High</span></td>
+            <td class="move"><span class="mt"><b>Development leasing</b> — pitch the pre-lease now.</span>
+              <span class="assets"><span class="achip">[One-pager]</span><span class="achip">[Email draft]</span><span class="achip">[Call script]</span></span></td>
+          </tr>
+          <tr>
+            <td class="prop">Tolleson industrial<small>±140,000 SF · industrial</small><span class="contact">Contact · [owner resolving]</span></td>
+            <td class="sig">Loan matures in 68 days</td>
+            <td class="why">Refi is tight; a sale or recap is likely.</td>
+            <td class="score"><span class="tag high">High</span></td>
+            <td class="move"><span class="mt"><b>Brokerage</b> — acquisition or recap intro to ownership.</span>
+              <span class="assets"><span class="achip">[One-pager]</span><span class="achip">[Email draft]</span><span class="achip">[Call script]</span></span></td>
+          </tr>
+          <tr>
+            <td class="prop">SW distribution center<small>±310,000 SF · industrial</small><span class="contact">Contact · [owner resolving]</span></td>
+            <td class="sig">Anchor 3PL lease expires in ~5 months</td>
+            <td class="why">A renewal to protect — or a re-lease to win.</td>
+            <td class="score"><span class="tag high">High</span></td>
+            <td class="move"><span class="mt"><b>Retention / re-leasing</b> — get ahead of the expiry.</span>
+              <span class="assets"><span class="achip">[One-pager]</span><span class="achip">[Email draft]</span><span class="achip">[Call script]</span></span></td>
+          </tr>
+          <tr>
+            <td class="prop">Deer Valley industrial<small>Single asset · industrial</small><span class="contact">Contact · [receiver resolving]</span></td>
+            <td class="sig">Receivership order recorded</td>
+            <td class="why">An asset that needs a manager now.</td>
+            <td class="score"><span class="tag high">High</span></td>
+            <td class="move"><span class="mt"><b>Receivership pipeline</b> — quiet outreach to the receiver.</span>
+              <span class="assets"><span class="achip">[One-pager]</span><span class="achip">[Email draft]</span><span class="achip">[Call script]</span></span></td>
+          </tr>
+          <tr>
+            <td class="prop">Chandler power center<small>Multi-tenant retail</small><span class="contact">Contact · [owner resolving]</span></td>
+            <td class="sig">Sold to an out-of-state buyer three weeks ago</td>
+            <td class="why">New owner, no local operator, standing vacancy.</td>
+            <td class="score"><span class="tag med">Med</span></td>
+            <td class="move"><span class="mt"><b>New assignment</b> — pitch management + leasing.</span>
+              <span class="assets"><span class="achip">[One-pager]</span><span class="achip">[Email draft]</span><span class="achip">[Call script]</span></span></td>
+          </tr>
+          <tr>
+            <td class="prop">Gateway South parcels<small>±22 acres · land</small><span class="contact">Contact · [owner resolving]</span></td>
+            <td class="sig">GPA / PAD application filed; adjacent parcel tax-delinquent</td>
+            <td class="why">An assemblage play before the market connects it.</td>
+            <td class="score"><span class="tag med">Med</span></td>
+            <td class="move"><span class="mt"><b>Site acquisition</b> — move on the assemblage.</span>
+              <span class="assets"><span class="achip">[One-pager]</span><span class="achip">[Email draft]</span><span class="achip">[Call script]</span></span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="caption">This week: Phoenix industrial. The same engine covers retail, office, land, and management.</div>
+
+      <div class="contd">
+        <span>Every row ships with the same three assets — <b>one-pager, email draft, call script.</b></span>
+        <span class="pg">PAGE 1 OF 2&nbsp;&middot;&nbsp;THE LIST</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE 2 — WHAT LANDS ON THE AGENT'S DESK ===== -->
+  <div class="page">
+    <div class="mast">
+      <div class="wm">Tolon.</div>
+      <div class="gen">Generated for CAM&nbsp;&middot;&nbsp;Monday 6:00 AM MST</div>
+    </div>
+
+    <div class="body">
+      <div class="eyebrow">The Monday Signal Report&nbsp; &middot;&nbsp; page 2 of 2</div>
+      <div class="titlerow">
+        <div><h1>What lands on the agent's desk</h1></div>
+        <div class="thesis"><b>No signal, no send.</b><span>nothing leaves without a person</span></div>
+      </div>
+      <p class="lead">A signal isn't a to-do — it's a ready-to-act package. Here's the top industrial opportunity from the list, expanded into the brief and the three assets an agent sends the same morning. <b>The research is done. The agent just approves.</b></p>
+
+      <div class="brief">
+        <div class="brief-head">FEATURED OPPORTUNITY &middot; TOP INDUSTRIAL SIGNAL</div>
+        <div class="brief-in">
+          <div class="flag">LOOP 303 CORRIDOR &middot; PHOENIX</div>
+          <h3>Loop 303 big-box distribution — ±1.1M SF planned</h3>
+          <p class="bwhy">Developer pulled the distribution permit and the new interchange is funded — demand is landing here first, with a pre-lease window open before the shell tops out. The owner is a single-asset LLC; the decision-maker is being resolved now.</p>
+          <div class="move-line">
+            <span><b>Suggested move:</b> Pitch the pre-lease / development-leasing assignment now.</span>
+            <span><b>Contact:</b> [decision-maker — Owner Resolver locating]</span>
+          </div>
+          <div class="assets-grid">
+            <div class="asset">
+              <div class="asset-h">[ ONE-PAGER ]</div>
+              <div class="thumb">[ Industrial one-pager ]</div>
+              <div class="asset-cap">"We recently leased 20,000 SF two miles away." — the proof piece, attached to the send.</div>
+            </div>
+            <div class="asset">
+              <div class="asset-h">[ EMAIL DRAFT ]</div>
+              <div class="asset-body"><b>Subject:</b> 20,000 SF just leased near your Loop 303 site<br><br>[ 2–3 line placeholder — the nearby comp, the pre-lease timing, one clear ask. ]</div>
+            </div>
+            <div class="asset">
+              <div class="asset-h">[ CALL SCRIPT ]</div>
+              <div class="asset-body">[ Opener — name the permit + the nearby lease. ]<br><br>[ Value — the pre-lease window, and why now. ]<br><br>[ Ask — 15 minutes this week? ]</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="handoff">
+        <div class="hlead">Every signal on the list ships as this same package — <b>brief, one-pager, email, call script.</b> The agent's only job is the last mile:</div>
+        <div class="hsteps">
+          <div class="hstep"><b>1 · Review</b>Read the brief and the draft — about a minute.</div>
+          <div class="hstep"><b>2 · Approve or edit</b>Keep your voice; change anything before it goes.</div>
+          <div class="hstep"><b>3 · Send</b>The one-pager attaches itself; replies land on the calendar.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <div class="lab">How it's built</div>
+      <p>The engine watches your market for rezonings, permits, ownership changes, distress filings, and lease expirations — and your smart front door does the same for inbound. Each signal is scored against CAM's criteria, ranked, and shipped with the assets an agent needs to act. <b>You decide what sends.</b> The research and prioritization are automated. The relationships stay yours.</p>
+      <div class="value">One assignment this surfaces covers a year of the system.</div>
+      <div class="note">Sample format shown with illustrative signals. Live reports are populated with verified signals from your target market, delivered every Monday morning.</div>
+      <div class="sign">Tolon.</div>
+    </div>
+  </div>
+
+</body>
+</html>

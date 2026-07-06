@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# scratch / temp
+_*.html
+_*.png
+*.log
+/tmp/
+node_modules/
