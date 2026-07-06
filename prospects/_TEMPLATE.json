@@ -5,5 +5,6 @@
   "market": "Denver Metro",
   "marketShort": "Denver",
   "focus": "office",
-  "footprint": "Colorado footprint"
+  "footprint": "Colorado footprint",
+  "timezone": "MT"
 }

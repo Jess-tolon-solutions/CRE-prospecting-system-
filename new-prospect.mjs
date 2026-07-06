@@ -28,6 +28,19 @@ const missing = required.filter((k) => !cfg[k] || !String(cfg[k]).trim());
 if (missing.length) { console.error('Missing required config field(s): ' + missing.join(', ')); process.exit(1); }
 
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+
+// Time zone shown in the report header ("Monday 6:00 AM PST"). Use the config
+// value if given, otherwise infer from the market. Falls back to ET.
+const TZ_BY_MARKET = [
+  [/phoenix|arizona|tucson/i,                         'MST'],  // AZ: no DST, MST year-round
+  [/seattle|puget|portland|oregon|washington|tacoma/i, 'PT'],
+  [/(los angeles|san francisco|bay area|san diego|sacramento|california|vegas|nevada|reno)/i, 'PT'],
+  [/denver|colorado|salt lake|utah|albuquerque|new mexico|boise|idaho|montana|wyoming/i, 'MT'],
+  [/(chicago|dallas|houston|austin|san antonio|texas|minneapolis|kansas city|st\.? louis|nashville|memphis|new orleans|oklahoma|omaha|milwaukee|central)/i, 'CT'],
+];
+const inferTz = (m) => (TZ_BY_MARKET.find(([re]) => re.test(m)) || [null, 'ET'])[1];
+const timezone = (cfg.timezone && String(cfg.timezone).trim()) || inferTz(`${cfg.market} ${cfg.marketShort}`);
+
 const tokens = {
   COMPANY: cfg.company,               // "Capital Asset Management"
   COMPANY_SHORT: cfg.companyShort,    // "CAM"
@@ -38,6 +51,7 @@ const tokens = {
   FOCUS_TITLE: cap(cfg.focus),        // "Industrial" (derived)
   FOCUS_UPPER: cfg.focus.toUpperCase(),          // "INDUSTRIAL" (derived)
   FOOTPRINT: cfg.footprint,           // "five-state footprint"
+  TIMEZONE: timezone,                 // "PT" / "MST" / "CT" — from config or inferred
 };
 
 const outDir = join(ROOT, 'examples', cfg.slug);

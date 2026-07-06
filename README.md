@@ -83,9 +83,12 @@ That fills the templates, writes `examples/acme-realty/`, and renders both PDFs
 | `marketShort` | `Denver` | "This week: Denver …", the pilot line, brief flag |
 | `focus` | `office` | property-type labels, "…-led", "TOP OFFICE SIGNAL", pilot |
 | `footprint` | `Colorado footprint` | the Growth System hero line |
+| `timezone` *(optional)* | `PT` | the report header time (`Monday 6:00 AM PT`) |
 
 Short/upper/title variants (`CAM` → `PHOENIX`, `office` → `Office` → `OFFICE`) are
-derived automatically. The generator errors out if any token is left unfilled.
+derived automatically. `timezone` is inferred from the market when omitted (AZ → MST,
+West Coast → PT, etc.); set it explicitly to override. The generator errors out if any
+required token is left unfilled.
 
 > The **framing** is fully automated. The six **signal rows** and the **featured
 > brief** in the Signal Report are illustrative — after generating, replace them
